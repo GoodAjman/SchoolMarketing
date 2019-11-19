@@ -1,0 +1,19 @@
+package com.fshare.entity;
+
+import lombok.Data;
+
+import java.util.Date;
+@Data
+public class HeadLine {
+//    头条
+    private Long lineId;
+    private String lineName;
+    private String lineLink;
+    private String lineImg;
+    private Integer priority;
+//    0 不可用 1 可用
+    private Integer enableStauts;
+    private Date createTime;
+    private Date lastEditTime;
+
+}
