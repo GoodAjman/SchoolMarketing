@@ -1,6 +1,7 @@
 package com.fshare.dao;
 
 //import com.fshare.BaseTest;
+import com.fshare.BaseTest;
 import com.fshare.entity.Area;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +19,8 @@ import static org.junit.Assert.*;
  * @Author keny
  * @Date 2019/11/17 0017 上午 11:09
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-//告诉junit spring的配置文件
-@ContextConfiguration({"classpath:spring/spring-dao.xml"})
-public class AreaDaoTest   {
+
+public class AreaDaoTest extends BaseTest {
 //快捷键ctrl+shift+T
     @Resource
     private AreaDao areaDao;

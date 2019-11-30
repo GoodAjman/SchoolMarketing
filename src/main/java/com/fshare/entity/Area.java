@@ -11,7 +11,7 @@ public class Area {
 
     private String priority;
 
-    private Date createtime;
+    private Date createTime;
 
     private Date lastEditTime;
 
