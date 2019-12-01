@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -21,25 +22,27 @@ public class ImageUtil {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random r = new Random();
 
-    public static String generateThumbnail(CommonsMultipartFile thumbnail, String targetAddr){
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName,String targetAddr){
 //        图片的随机名
         String readFileName = getRandomFileName();
 //        扩展名
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
 //        创建路径
         makeDirPath(targetAddr);
-//        相对路径
+//        相对路径及名字
         String relativeAddr = targetAddr + readFileName + extension;
 
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         try {
-            Thumbnails.of(thumbnail.getInputStream()).size(200, 200).
-                    watermark(Positions.BOTTOM_CENTER, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f).
+            System.out.println("basepath"+basePath);
+            Thumbnails.of(thumbnailInputStream).size(200, 200).
+                    watermark(Positions.BOTTOM_CENTER, ImageIO.read(new File(basePath + "year.png")), 0.25f).
                     outputQuality(0.8f).toFile(dest);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return relativeAddr;
+
     }
 /**
  * 生成随机文件名，当前年月日小时分钟秒钟+五位随机数
@@ -51,10 +54,9 @@ public class ImageUtil {
 
     }
 //获取扩展名
-    private static String getFileExtension(CommonsMultipartFile cFile) {
+    private static String getFileExtension(String fileName) {
 //        获取文件流的文件名
-        String originalFileName = cFile.getOriginalFilename();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 //创建文件夹
     private static void makeDirPath(String targetAddr) {
